@@ -36,13 +36,15 @@ class Phys {
 			this.acc.x = -1 //a left
 		} else {
 			//friction
-			if (abs(this.vel.x) < 0.5) {
-				this.acc.x = 0
-				this.vel.x = 0
-			} else if (this.vel.x < 0) {
-				this.acc.x = 1
-			} else if (this.vel.x > 0) {
-				this.acc.x = -1
+			if (this.isGrounded) {
+				if (abs(this.vel.x) < 0.5) {
+					this.acc.x = 0
+					this.vel.x = 0
+				} else if (this.vel.x < 0) {
+					this.acc.x = 1
+				} else if (this.vel.x > 0) {
+					this.acc.x = -1
+				}
 			}
 		}
 
