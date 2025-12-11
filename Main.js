@@ -4,10 +4,31 @@ const gravity = 9.81 / 60
 const groundY = 500 - 50
 const extraNudge = 0.01
 
-let counter
+let timer = 0
+let counter = 1
 let physObj = []
 
 let player
+
+function startScreen() {
+
+}
+
+function gameScreen() {
+
+}
+
+function winScreen() {
+
+}
+
+function loseScreen() {
+
+}
+
+function preload() {
+	
+}
 
 function setup() {
 	createCanvas(1080, 500)
@@ -17,11 +38,22 @@ function setup() {
 }
 
 function draw() {
-	if (frameCount % 60 == 0){
-		counter++
+	if (counter == 2 && frameCount % 60 == 0){
+		timer++
 	}
 	background(100)
 	rectMode(CENTER)
+
+	//screens
+	if (counter = 1) {
+		startScreen()
+	} else if (counter = 2) {
+		gameScreen()
+	} else if (counter = 3) {
+		winScreen()
+	} else if (counter = 4) {
+		loseScreen()
+	}
 
 	//floor
 	push()
@@ -29,25 +61,20 @@ function draw() {
 	fill(0)
 	rect(width/2, groundY+25, width, 50)
 	pop()
-
+	//display and update phys objects
 	for (let otherObj of physObj){
 		otherObj.update()
 		otherObj.display()
 	}
-
-	//objects
-	//player.update()
-	//player.display()
-
-	//newObj.update()
-	//newObj.display()
 }
 
 function mouseClicked() {
-	let xvel = random(0, 10)
-	let yvel = random(0, 10)
-	let n = new Phys(width / 2, height/2, 20, 20, false, false, true, false)
-	physObj.push(n)
-	n.vel.x = xvel
-	n.vel.y = yvel
+	if (counter = 2) {
+		let xvel = random(0, 10)
+		let yvel = random(0, 10)
+		let n = new Phys(width / 2, height/2, 5, 5, false, false, true, false)
+		physObj.push(n)
+		n.vel.x = xvel
+		n.vel.y = yvel
+	}
 }

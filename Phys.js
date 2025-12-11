@@ -36,7 +36,7 @@ class Phys {
 			this.acc.x = -1 //a left
 		} else {
 			//friction
-			if (this.isGrounded) {
+			if (this.isGrounded && !this.isCon) {
 				if (abs(this.vel.x) < 0.5) {
 					this.acc.x = 0
 					this.vel.x = 0
