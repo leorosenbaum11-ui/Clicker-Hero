@@ -45,6 +45,15 @@ class Phys {
 				} else if (this.vel.x > 0) {
 					this.acc.x = -1
 				}
+			} else if (this.isCon) {
+				if (abs(this.vel.x) < 0.5) {
+					this.acc.x = 0
+					this.vel.x = 0
+				} else if (this.vel.x < 0) {
+					this.acc.x = 1
+				} else if (this.vel.x > 0) {
+					this.acc.x = -1
+				}
 			}
 		}
 

@@ -36,6 +36,8 @@ function setup() {
 	background(100)
 	//                width      height       rad  isCon stat, bouncy, AABB
 	//phys objects
+	player = new Phys(width / 2, height/2, 10, 10, true, false, true, false)
+	physObj.push(player)
 }
 
 function draw() {
