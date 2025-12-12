@@ -70,8 +70,8 @@ function draw() {
 
 function mouseClicked() {
 	if (counter = 2) {
-		let xvel = random(0, 10)
-		let yvel = random(0, 10)
+		let xvel = random(-10, 10)
+		let yvel = random(-10, 10)
 		let n = new Phys(width / 2, height/2, 5, 5, false, false, true, false)
 		physObj.push(n)
 		n.vel.x = xvel
