@@ -65,14 +65,11 @@ class Phys {
 		}
 
 		if (this.pos.x > width) {
-			this.pos.x = width
-			this.vel.x = 0
+			this.vel.mult(-1, -1)
 		} else if (this.pos.x < 0) {
-			this.pos.x = 0
-			this.vel.x = 0
+			this.vel.mult(-1, -1)
 		}
 		this.collisions(physObj) //call method to check collisions
-		console.log(this.onObject)
 	}
 
 	collisions(allObjects) {
