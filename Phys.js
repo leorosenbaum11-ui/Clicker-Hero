@@ -1,3 +1,4 @@
+//Leo Rosenbaum
 class Phys {
 	constructor(startX, startY, x, y, isCon, stat, bouncy, AABB) {
 		this.pos = createVector(startX, startY)
@@ -13,6 +14,9 @@ class Phys {
 		this.onObject = false
 		this.bouncy = bouncy
 		this.AABB = AABB
+		this.hitPlayer = false
+		this.offset = 0
+		this.hue = 0
 	}
 	
 	update() {
@@ -95,7 +99,7 @@ class Phys {
 				this.onObject = true
 				isOnObjectThisCheck = true;
 				this.acc.set(0, 0)
-				
+
 				if(!this.bouncy || !other.bouncy) {
 					if (!keyIsDown(87)) {
 						this.vel.set(0, 0)
@@ -110,7 +114,7 @@ class Phys {
 				let separation = overlap + extraNudge
 
 				let direction = p5.Vector.sub(this.pos, other.pos)
-
+					
 				if (distance === 0) {
 					direction.set(1, 0)
 				} else {
@@ -164,11 +168,15 @@ class Phys {
 	display() {
 		if(!this.AABB) {
 			push()
-			fill(255)
+			colorMode(HSB)
+			this.hue = map(noise(this.offset), 0, 1, 0, 360)
+			fill(this.hue, 100, 100)
 			noStroke()
 			circle(this.pos.x, this.pos.y, this.x * 2)
 			pop()
+			this.offset += 0.01
 		}
+		
 		if(this.AABB) {
 			push()
 			fill(255)
