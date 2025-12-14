@@ -77,10 +77,16 @@ class Phys {
 			this.isGrounded = false
 		}
 
-		if (this.pos.x > width) {
+		if (this.pos.x > width && !this.isCon) {
 			this.vel.mult(-1, -1)
-		} else if (this.pos.x < 0) {
+		} else if (this.pos.x < 0 && !this.isCon) {
 			this.vel.mult(-1, -1)
+		} else if (this.pos.x < 0 && this.isCon) {
+			this.pos.x = 0 + extraNudge
+			this.vel.x = 0
+		} else if (this.pos.x > width && this.isCon) {
+			this.pos.x = width - extraNudge
+			this.vel.x = 0
 		}
 		this.collisions(physObj) //call method to check collisions
 	}

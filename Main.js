@@ -5,7 +5,7 @@ const groundY = 500 - 50
 const extraNudge = 0.01
 
 let startImg, gameImg, myFont, hue, offset = 0
-let timer, counter, health = 3
+let timer, counter, otherside, clicks = 60, health = 3
 let physObj = []
 
 let player
@@ -15,6 +15,7 @@ function preload() {
 	gameImg = loadImage("bouncyball.png")
 	gameBckrnd = loadImage("balls.webp")
 	myFont = loadFont("Sekuya-Regular.ttf")
+	winImg = loadImage("bouncies.jpg")
 }
 
 function startScreen() {
@@ -40,7 +41,7 @@ function startScreen() {
 
 function gameScreen() {
 	if (frameCount % 60 == 0) {
-		timer++
+		timer--
 	}
 	
 	//floor and screen items
@@ -59,7 +60,11 @@ function gameScreen() {
 	textSize(20)
 	textAlign(CENTER)
 	text("Time: " + timer, width/5, height/5)
-	text("Health: " + health, width * 4/5, height/5)
+	text("Health: ", width * 4/5, height/5)
+	text("Clicks Needed: " + clicks, width * 3/5, height/5)
+	rectMode(CORNER)
+	noStroke()
+	rect(width * 4/5 + 70, height/5 - 20, map(health, 0, 3, 0, 100), 20)
 	pop()
 
 	//display and update phys objects
@@ -71,8 +76,11 @@ function gameScreen() {
 		}
 	}
 
-	if (health <= 0) {
+	if (health <= 0 || timer <= 0 && clicks > 0) {
 		counter = 4
+	}
+	if (timer <= 0 && clicks == 0 && health > 0) {
+		counter = 3
 	}
 
 	//ball
@@ -85,7 +93,21 @@ function gameScreen() {
 }
 
 function winScreen() {
-
+	push()
+	hue = map(noise(offset), 0, 1, 0, 360)
+	colorMode(HSB)
+	textAlign(CENTER)
+	fill(255)
+	push()
+	scale(1)
+	image(winImg, 0, 0)
+	pop()
+	textSize(30)
+	stroke(0)
+	fill(hue, 100, 100)
+	fill(0)
+	text("You Won The Game!!!", width / 2, height / 3.5)
+	pop()
 }
 
 function loseScreen() {
@@ -108,13 +130,15 @@ function loseScreen() {
 
 function setup() {
 	counter = 1
-	timer = 0
+	timer = 30
 	createCanvas(1080, 500)
 	background(100)
 	//                width      height       rad  isCon stat, bouncy, AABB
 	//phys objects
 	player = new Phys(width / 2, height/2, 10, 10, true, false, true, false)
 	physObj.push(player)
+	otherside = createAudio("otherside303exe.mp3")
+	otherside.loop()
 }
 
 function draw() {
@@ -144,6 +168,10 @@ function mouseClicked() {
 		physObj.push(n)
 		n.vel.x = xvel
 		n.vel.y = yvel
+		clicks --
+		if (clicks <= 0) {
+			clicks = 0
+		}
 	}
 	if (counter == 1 && dist(width/2, height/2, mouseX, mouseY) < 100) {
 		counter = 2
