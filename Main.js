@@ -1,11 +1,10 @@
 //Leo Rosenbaum
-//FLOOR IN PHYS CLASS FOR JUMPING ON OBJ
 const gravity = 9.81 / 60
 const groundY = 500 - 50
 const extraNudge = 0.01
 
 let startImg, gameImg, myFont, hue, offset = 0, dist1 = 135
-let timer, counter, otherside, clicks = 60, health = 3
+let timer, counter, otherside, clicks = 130, health = 3
 let physObj = []
 
 let player
@@ -16,6 +15,7 @@ function preload() {
 	gameBckrnd = loadImage("balls.webp")
 	myFont = loadFont("Sekuya-Regular.ttf")
 	winImg = loadImage("bouncies.jpg")
+	bouncy1 = loadImage("bouncy1.png")
 }
 
 function startScreen() {
@@ -28,6 +28,13 @@ function startScreen() {
 	scale(1.35)
 	image(startImg, 0, 0)
 	pop()
+
+	push()
+	translate(width/2, height/2 + width/7)
+	imageMode(CENTER)
+	image(bouncy1, 0, 0)
+	pop()
+
 	stroke(0)
 	fill(hue, 100, 100)
 	if (counter == 1 && dist(width/2, height/2, mouseX, mouseY) < 100) {
@@ -76,6 +83,9 @@ function gameScreen() {
 	rectMode(CORNER)
 	noStroke()
 	rect(width * 4/5 + 70, height/5 - 20, map(health, 0, 3, 0, 100), 20)
+	noFill()
+	stroke(0)
+	rect(width * 4/5 + 70, height/5 - 20, 100, 20)
 	pop()
 
 	//display and update phys objects
@@ -87,7 +97,7 @@ function gameScreen() {
 	if (health <= 0 || timer <= 0 && clicks > 0) {
 		counter = 4
 	}
-	if (timer <= 0 && clicks == 0 && health > 0) {
+	if (clicks <= 0 && health > 0) {
 		counter = 3
 	}
 
@@ -138,7 +148,7 @@ function loseScreen() {
 
 function setup() {
 	counter = 1
-	timer = 30
+	timer = 45
 	createCanvas(1080, 500)
 	background(100)
 	//                width      height       rad  isCon stat, bouncy, AABB
@@ -183,13 +193,19 @@ function mouseClicked() {
 	}
 	if (counter == 1 && dist(width/2, height/2, mouseX, mouseY) < 100) {
 		counter = 2
-	} else if (counter == 3 || counter == 4) {
-		counter = 1
-		timer = 30
-		clicks = 60
-		health = 3
-		physObj = []
-		player = new Phys(width / 2, height/2, 10, 10, true, false, true, false)
-		physObj.push(player)
+	}
+}
+
+function keyPressed() {
+	if (key == 'r' || key == 'R') {
+		if (counter == 3 || counter == 4) {
+			counter = 1
+			timer = 45
+			clicks = 130
+			health = 3
+			physObj = []
+			player = new Phys(width / 2, height/2, 10, 10, true, false, true, false)
+			physObj.push(player)
+		}
 	}
 }

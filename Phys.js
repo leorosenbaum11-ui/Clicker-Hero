@@ -14,7 +14,6 @@ class Phys {
 		this.onObject = false
 		this.bouncy = bouncy
 		this.AABB = AABB
-		this.hitPlayer = false
 		this.offset = 0
 		this.hue = 0
 	}
@@ -106,11 +105,11 @@ class Phys {
 				isOnObjectThisCheck = true;
 				this.acc.set(0, 0)
 
-				for (let otherObj of physObj){
-					if (otherObj.onObject && otherObj === player) {
-						health --
-						}
-					}
+				if (this.onObject && this !== player && other === player) {
+					health --
+				} else if (this.onObject && this === player && other !== player) {
+					health --
+				}
 
 				if(!this.bouncy || !other.bouncy) {
 					if (!keyIsDown(87)) {
