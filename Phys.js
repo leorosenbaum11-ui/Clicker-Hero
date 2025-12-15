@@ -106,6 +106,12 @@ class Phys {
 				isOnObjectThisCheck = true;
 				this.acc.set(0, 0)
 
+				for (let otherObj of physObj){
+					if (otherObj.onObject && otherObj === player) {
+						health --
+						}
+					}
+
 				if(!this.bouncy || !other.bouncy) {
 					if (!keyIsDown(87)) {
 						this.vel.set(0, 0)

@@ -4,7 +4,7 @@ const gravity = 9.81 / 60
 const groundY = 500 - 50
 const extraNudge = 0.01
 
-let startImg, gameImg, myFont, hue, offset = 0
+let startImg, gameImg, myFont, hue, offset = 0, dist1 = 135
 let timer, counter, otherside, clicks = 60, health = 3
 let physObj = []
 
@@ -28,12 +28,23 @@ function startScreen() {
 	scale(1.35)
 	image(startImg, 0, 0)
 	pop()
-	textSize(20)
 	stroke(0)
 	fill(hue, 100, 100)
-	rect(width / 2, height / 2, 250, 100)
-	fill(0)
-	text("Click to Start", width / 2, height / 2)
+	if (counter == 1 && dist(width/2, height/2, mouseX, mouseY) < 100) {
+		rect(width / 2, height / 2, 187, 75)
+		fill(0)
+		textSize(15)
+		text("Click to Start", width / 2, height / 2)
+		dist1 = 93.5
+	} else {
+		rect(width / 2, height / 2, 250, 100)
+		fill(0)
+		textSize(20)
+		text("Click to Start", width / 2, height / 2)
+		dist1 = 135
+	}
+	
+	textSize(20)
 	text("Bouncy Ball Clicker", width / 2, height / 4)
 	pop()
 	
@@ -71,9 +82,6 @@ function gameScreen() {
 	for (let otherObj of physObj){
 		otherObj.update()
 		otherObj.display()
-		if (otherObj.onObject && otherObj === player) {
-			health --
-		}
 	}
 
 	if (health <= 0 || timer <= 0 && clicks > 0) {
