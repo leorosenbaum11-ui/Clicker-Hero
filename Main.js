@@ -183,5 +183,13 @@ function mouseClicked() {
 	}
 	if (counter == 1 && dist(width/2, height/2, mouseX, mouseY) < 100) {
 		counter = 2
+	} else if (counter == 3 || counter == 4) {
+		counter = 1
+		timer = 30
+		clicks = 60
+		health = 3
+		physObj = []
+		player = new Phys(width / 2, height/2, 10, 10, true, false, true, false)
+		physObj.push(player)
 	}
 }
