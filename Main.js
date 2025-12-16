@@ -3,7 +3,7 @@ const gravity = 9.81 / 60
 const groundY = 500 - 50
 const extraNudge = 0.01
 
-let startImg, gameImg, myFont, hue, offset = 0, dist1 = 135
+let startImg, gameImg, myFont, sphere, hue, offset = 0, dist1 = 135
 let timer, counter, otherside, clicks = 130, health = 3
 let physObj = []
 
@@ -16,6 +16,7 @@ function preload() {
 	myFont = loadFont("Sekuya-Regular.ttf")
 	winImg = loadImage("bouncies.jpg")
 	bouncy1 = loadImage("bouncy1.png")
+	sphere = loadImage("sphereical.png")
 }
 
 function startScreen() {
@@ -36,14 +37,16 @@ function startScreen() {
 	pop()
 
 	stroke(0)
-	fill(hue, 100, 100)
+	
 	if (counter == 1 && dist(width/2, height/2, mouseX, mouseY) < 100) {
+		fill(hue, 100, 50)
 		rect(width / 2, height / 2, 187, 75)
 		fill(0)
 		textSize(15)
 		text("Click to Start", width / 2, height / 2)
 		dist1 = 93.5
 	} else {
+		fill(hue, 100, 100)
 		rect(width / 2, height / 2, 250, 100)
 		fill(0)
 		textSize(20)
@@ -105,8 +108,13 @@ function gameScreen() {
 	push()
 	imageMode(CENTER)
 	translate(width/2, height/2)
-	scale(0.5)
-	image(gameImg, 0, 0)
+	scale(1)
+	if (dist(width/2, height/2, mouseX, mouseY) <= 23) {
+		image(gameImg, 0, 0)
+	} else if (dist(width/2, height/2, mouseX, mouseY) > 23) {
+		scale(0.5)
+		image(gameImg, 0, 0)
+	}
 	pop()
 }
 

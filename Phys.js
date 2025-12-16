@@ -180,10 +180,17 @@ class Phys {
 		if(!this.AABB) {
 			push()
 			colorMode(HSB)
+			imageMode(CENTER)
 			this.hue = map(noise(this.offset), 0, 1, 0, 360)
 			fill(this.hue, 100, 100)
 			noStroke()
-			circle(this.pos.x, this.pos.y, this.x * 2)
+			translate(this.pos.x, this.pos.y)
+			scale(0.005 * this.x*2)
+			if(!this.isCon) {
+				image(sphere, 0, 0)
+			} else if (this.isCon) {
+				circle(0, 0, 225)
+			}
 			pop()
 			this.offset += 0.01
 		}
