@@ -38,7 +38,7 @@ function startScreen() {
 
 	stroke(0)
 	
-	if (counter == 1 && dist(width/2, height/2, mouseX, mouseY) < 100) {
+	if (counter == 1 && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height / 2 - 50 && mouseY < height / 2 + 50) {
 		fill(hue, 100, 50)
 		rect(width / 2, height / 2, 187, 75)
 		fill(0)
@@ -132,7 +132,27 @@ function winScreen() {
 	stroke(0)
 	fill(hue, 100, 100)
 	fill(0)
-	text("You Won The Game!!!", width / 2, height / 3.5)
+	text("You Won The Game!!!", width / 2, height / 5)
+	pop()
+
+	push()
+	if (counter == 3 && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height / 2 - 50 && mouseY < height / 2 + 50) {
+		fill(hue, 100, 50)
+		rect(width / 2, height / 2, 225, 75)
+		fill(0)
+		textSize(15)
+		textAlign(CENTER)
+		text("Click to Restart", width / 2, height / 2)
+		dist1 = 93.5
+	} else {
+		fill(hue, 100, 100)
+		rect(width / 2, height / 2, 300, 100)
+		fill(0)
+		textSize(20)
+		textAlign(CENTER)
+		text("Click to Restart", width / 2, height / 2)
+		dist1 = 135
+	}
 	pop()
 }
 
@@ -150,7 +170,27 @@ function loseScreen() {
 	stroke(0)
 	fill(hue, 100, 100)
 	fill(0)
-	text("You Lost The Game!!!", width / 2, height / 2)
+	text("You Lost The Game!!!", width / 2, height / 5)
+	pop()
+
+	push()
+	if (counter == 4 && mouseX > width / 2 - 100 && mouseX < width / 2 + 150 && mouseY > height / 2 - 50 && mouseY < height / 2 + 50) {
+		fill(hue, 100, 50)
+		rect(width / 2, height / 2, 225, 75)
+		fill(0)
+		textSize(15)
+		textAlign(CENTER)
+		text("Click to Restart", width / 2, height / 2)
+		dist1 = 93.5
+	} else {
+		fill(hue, 100, 100)
+		rect(width / 2, height / 2, 300, 100)
+		fill(0)
+		textSize(20)
+		textAlign(CENTER)
+		text("Click to Restart", width / 2, height / 2)
+		dist1 = 135
+	}
 	pop()
 }
 
@@ -199,21 +239,37 @@ function mouseClicked() {
 			clicks = 0
 		}
 	}
-	if (counter == 1 && dist(width/2, height/2, mouseX, mouseY) < 100) {
+	if (counter == 1 && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height / 2 - 50 && mouseY < height / 2 + 50) {
 		counter = 2
+	} else if (counter == 3 && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height / 2 - 50 && mouseY < height / 2 + 50) {
+		counter = 1
+		timer = 45
+		clicks = 130
+		health = 3
+		physObj = []
+		player = new Phys(width / 2, height/2, 10, 10, true, false, true, false)
+		physObj.push(player)
+	} else if (counter == 4 && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height / 2 - 50 && mouseY < height / 2 + 50) {
+		counter = 1
+		timer = 45
+		clicks = 130
+		health = 3
+		physObj = []
+		player = new Phys(width / 2, height/2, 10, 10, true, false, true, false)
+		physObj.push(player)
 	}
 }
 
-function keyPressed() {
-	if (key == 'r' || key == 'R') {
-		if (counter == 3 || counter == 4) {
-			counter = 1
-			timer = 45
-			clicks = 130
-			health = 3
-			physObj = []
-			player = new Phys(width / 2, height/2, 10, 10, true, false, true, false)
-			physObj.push(player)
-		}
-	}
-}
+// function keyPressed() {
+// 	if (key == 'r' || key == 'R') {
+// 		if (counter == 3 || counter == 4) {
+// 			counter = 1
+// 			timer = 45
+// 			clicks = 130
+// 			health = 3
+// 			physObj = []
+// 			player = new Phys(width / 2, height/2, 10, 10, true, false, true, false)
+// 			physObj.push(player)
+// 		}
+// 	}
+// }
